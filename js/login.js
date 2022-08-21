@@ -1,7 +1,7 @@
 let loginForm = document.getElementById("loginForm");
 
 loginForm.innerHTML = `
-<img src="/img/login.png" alt="e-mercado logo" class="logo">
+<img src="img/login.png" alt="e-mercado logo" class="logo">
 <h1>Inicio de sesión</h1>
 <div class="emailForm form" id="emailForm">
     <label for="emailInput">Email</label>
