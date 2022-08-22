@@ -1,6 +1,6 @@
 const CARS_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
 
-let productsArray = [];
+let carsArray = [];
 
 function showProductsCars(array) {
     let htmlContentToAppend = "";
