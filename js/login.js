@@ -49,7 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (loginflag) {
-            window.location = "homepage.html"
+            /* Entrega 2, pauta 1: mostrar, en la barra de navegación superior, el nombre de usuario ingresado en la pantalla de inicio de sesión */
+            localStorage.setItem('User', email.value);
+            window.location = "index.html";
         }
     })
 });
