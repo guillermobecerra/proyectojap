@@ -15,6 +15,39 @@
       background-color: rgb(248, 249, 250);
     }
   </style>
+  <!-- Inicio de los scripts para el inicio de sesión con Google -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+  <script>
+    function handleCredentialResponse(response) {
+      const data = jwt_decode(response.credential);
+      localStorage.setItem("User", data.email);
+      window.location = "index.html";
+    }
+
+    window.onload = function () {
+
+      google.accounts.id.initialize({
+        client_id: "758590455376-vr5i9sodlig6bd3o58cm06olcd4etqkn.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"), {
+        theme: "filled_blue",
+        size: "large",
+        shape: "pill",
+        text: "$ {button.text}",
+        type: "standard",
+        locale: "es-419",
+        logo_alignment: "left",
+      }
+      );
+
+      google.accounts.id.prompt();
+    }
+  </script>
+  <!-- Fin de los scripts para el inicio de sesión con Google -->
 </head>
 
 <body>
@@ -22,6 +55,7 @@
     <div class="container">
       <div class="text-center" id="loginForm">
       </div>
+      <div id="buttonDiv" class="container" style="width: 18%; margin-top:30px"></div>
     </div>
   </main>
   <footer class="text-muted">

@@ -1,0 +1,17 @@
+.checked {
+    color: orange;
+}
+
+.submitBtn {
+    margin-top: 5px;
+    background-color: #1a73e8;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: white;
+    height: 40px;
+    width: 80px;
+}
+
+.submitBtn:hover {
+    background-color: #4b98fb;
+}

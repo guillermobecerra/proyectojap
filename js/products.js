@@ -1,6 +1,7 @@
 let currentProductsArray = [];
 let minCount = undefined;
 let maxCount = undefined;
+let search = undefined;
 
 function showProductsList() {
 
@@ -11,8 +12,11 @@ function showProductsList() {
         if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))) {
 
-            htmlContentToAppend += `
-          <div class="list-group-item list-group-item-action">
+            if (search == undefined || search == "" || product.name.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+                product.description.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+
+                htmlContentToAppend += `
+            <div class="list-group-item list-group-item-action" style="cursor: pointer" onclick="infoRedirect(${product.id})">
               <div class="row">
                   <div class="col-3">
                       <img src="` + product.image + `" alt="product-image" class="img-thumbnail">
@@ -29,10 +33,17 @@ function showProductsList() {
               </div>
           </div>
           `
+            }
         }
 
         document.getElementById("products-list-container").innerHTML = htmlContentToAppend;
     }
+}
+
+/* Entrega 3, Pauta 1: guardar en localstorage el id del producto y redirigir a su product-info */
+function infoRedirect(id) {
+    localStorage.setItem("product-info", id);
+    window.location = "product-info.html";
 }
 
 
@@ -122,4 +133,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
         showProductsList();
     });
 
+    /* Entrega 2, Desafíate: funcionalidad del input de tipo search */
+    document.getElementById("search").addEventListener("input", function () {
+        search = document.getElementById("search").value;
+        showProductsList();
+    })
 })
