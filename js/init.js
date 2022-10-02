@@ -47,4 +47,21 @@ if (!localStorage.getItem("User")) {
 /* Entrega 2, pauta 1: mostrar, en la barra de navegación superior, el nombre de usuario ingresado en la pantalla de inicio de sesión */
 let array_of_li = document.querySelectorAll("ul.navbar-nav > li");
 
-array_of_li[3].innerHTML = `<a class="nav-link" href="my-profile.html">${localStorage.getItem("User")}</a>`
+/* Entrega 4, pauta 2: convertir el nombre de usuario en un menú desplegable */
+array_of_li[3].classList.add('dropdown');
+array_of_li[3].innerHTML = `
+    <div>
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        ${localStorage.getItem("User")}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+        <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+        <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+        <li onclick="logout()"><a class="dropdown-item" href="login.html">Cerrar sesión</a></li>
+      </ul>
+    </div>
+`
+
+function logout() {
+  localStorage.clear();
+}
