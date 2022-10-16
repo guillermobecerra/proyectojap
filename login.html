@@ -22,7 +22,39 @@
     function handleCredentialResponse(response) {
       const data = jwt_decode(response.credential);
       localStorage.setItem("User", data.email);
-      window.location = "index.html";
+      let getJSONData = function (url) {
+        let result = {};
+        return fetch(url)
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw Error(response.statusText);
+            }
+          })
+          .then(function (response) {
+            result.status = 'ok';
+            result.data = response;
+            return result;
+          })
+          .catch(function (error) {
+            result.status = 'error';
+            result.data = error;
+            return result;
+          });
+      }
+      getJSONData("https://japceibal.github.io/emercado-api/user_cart/25801.json").then(function (resultObj) {
+        if (resultObj.status === "ok") {
+          let cart = resultObj.data;
+          localStorage.setItem("Cart", JSON.stringify(cart));
+        }
+
+        if (localStorage.getItem("PreviousPage")) {
+          window.location = localStorage.getItem("PreviousPage");
+        } else {
+          window.location = "index.html";
+        }
+      })
     }
 
     window.onload = function () {
