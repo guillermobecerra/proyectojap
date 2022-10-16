@@ -1,4 +1,26 @@
 let loginForm = document.getElementById("loginForm");
+/* Entrega 5, pauta 1: importar en el carrito de compras el producto del json de la consigna */
+let getJSONData = function (url) {
+    let result = {};
+    return fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw Error(response.statusText);
+            }
+        })
+        .then(function (response) {
+            result.status = 'ok';
+            result.data = response;
+            return result;
+        })
+        .catch(function (error) {
+            result.status = 'error';
+            result.data = error;
+            return result;
+        });
+}
 
 loginForm.innerHTML = `
 <img src="img/login.png" alt="e-mercado logo" class="logo">
@@ -51,7 +73,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (loginflag) {
             /* Entrega 2, pauta 1: mostrar, en la barra de navegación superior, el nombre de usuario ingresado en la pantalla de inicio de sesión */
             localStorage.setItem('User', email.value);
-            window.location = "index.html";
+            /* Entrega 5, pauta 1: importar en el carrito de compras el producto del json de la consigna */
+            getJSONData("https://japceibal.github.io/emercado-api/user_cart/25801.json").then(function (resultObj) {
+                if (resultObj.status === "ok") {
+                    let cart = resultObj.data;
+                    localStorage.setItem("Cart", JSON.stringify(cart));
+                }
+
+                if (localStorage.getItem("PreviousPage")) {
+                    window.location = localStorage.getItem("PreviousPage");
+                } else {
+                    window.location = "index.html";
+                }
+            })
         }
     })
 });

@@ -7,6 +7,50 @@ document.addEventListener("DOMContentLoaded", function (e) {
             currentProductArray = resultObj.data;
             showProductInfo();
             showRelatedProducts();
+            if (localStorage.getItem("Cart")) {
+                let cart = JSON.parse(localStorage.getItem("Cart"));
+                let flag = 0;
+                for (let i = 0; i < cart.articles.length; i++) {
+                    if (cart.articles[i].id == currentProductArray.id) {
+                        flag = 1
+                    }
+                }
+                if (flag == 1) {
+                    document.getElementById("buy").setAttribute("data-bs-target", "#cartAlreadyModal");
+                }
+                document.getElementById("buy").addEventListener("click", function () {
+                    if (!flag == 1) {
+                        cart.articles[cart.articles.length] = {
+                            id: currentProductArray.id,
+                            name: currentProductArray.name,
+                            count: 1,
+                            unitCost: currentProductArray.cost,
+                            currency: currentProductArray.currency,
+                            image: currentProductArray.images[0]
+                        };
+                        document.getElementById("buy").setAttribute("data-bs-target", "#cartAlreadyModal");
+                        localStorage.setItem("Cart", JSON.stringify(cart));
+                        flag = 1;
+                    }
+                })
+            } else {
+                let cart = {
+                    user: localStorage.getItem("User"),
+                    articles: []
+                };
+                document.getElementById("buy").addEventListener("click", function () {
+                    cart.articles[0] = {
+                        id: currentProductArray.id,
+                        name: currentProductArray.name,
+                        count: 1,
+                        unitCost: currentProductArray.cost,
+                        currency: currentProductArray.currency,
+                        image: currentProductArray.images[0]
+                    };
+                    document.getElementById("buy").setAttribute("data-bs-target", "#cartAlreadyModal");
+                    localStorage.setItem("Cart", JSON.stringify(cart));
+                })
+            }
         }
     })
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
@@ -24,7 +68,45 @@ document.addEventListener("DOMContentLoaded", function (e) {
 function showProductInfo() {
     let product = currentProductArray;
     document.getElementById("product-info").innerHTML = `
-    <h2 class="p-4" style="margin: 15px 0px 0px -18px">${product.name}</h2>
+    <div class="d-flex flex-row">
+        <h2 class="p-4 me-auto" style="margin: 15px 0px 0px -18px">${product.name}</h2>
+        <button type="button" class="btn btn-success align-self-center mt-3" id="buy" data-bs-toggle="modal" data-bs-target="#cartAddModal">Comprar</button>
+        <div class="modal fade" id="cartAddModal" tabindex="-1" aria-labelledby="cartAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-success">
+                <div class="modal-header text-white">
+                    <h1 class="modal-title fs-5" id="cartAddModalLabel">Producto agregado al carrito</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    ¿Deseas ir al carrito?
+                </div>
+                <div class="modal-footer justify-content-center bg-white">
+                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Seguir comprando</button>
+                    <a class="btn btn-success" href="cart.html" role="button">Ir al carrito</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="cartAlreadyModal" tabindex="-1" aria-labelledby="cartAlreadyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-danger">
+                <div class="modal-header text-white">
+                    <h1 class="modal-title fs-5" id="cartAlreadyModalLabel">Este producto ya se encuentra en el carrito</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-white">
+                    Dentro del carrito podrás modificar las unidades a comprar.<br>
+                    ¿Deseas ir al carrito?
+                </div>
+                <div class="modal-footer justify-content-center bg-white">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Seguir comprando</button>
+                    <a class="btn btn-danger" href="cart.html" role="button">Ir al carrito</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr>
     <div id=cost>
         <p><strong>Precio</strong><br>
@@ -89,7 +171,7 @@ function showImages() {
             </div>
             `;
             carouselIndicators += `
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${[i]}" aria-label="Slide ${[i+1]}"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${[i]}" aria-label="Slide ${[i + 1]}"></button>
             `
         }
     }
