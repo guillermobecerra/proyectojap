@@ -32,7 +32,7 @@ loginForm.innerHTML = `
     </div>
     <p class="textError" id="emailTextError">Ingresa tu e-mail</p>
 </div>
-<div class"passForm form" id="passForm">
+<div class="passForm form" id="passForm">
     <label for="passInput">Contraseña</label>
     <div class="input">
         <input type="password" placeholder="Contraseña" id="passInput">

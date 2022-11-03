@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
             currentProductArray = resultObj.data;
             showProductInfo();
             showRelatedProducts();
+
+            /* Funcionalidad para agregar el producto al carrito, si es que no está allí */
             if (localStorage.getItem("Cart")) {
                 let cart = JSON.parse(localStorage.getItem("Cart"));
                 let flag = 0;
@@ -57,10 +59,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if (resultObj.status === "ok") {
             currentCommentsArray = resultObj.data;
             showProductComments();
+            loadNewComments();
+            rating();
+            document.getElementById("commentSubmit").addEventListener("click", function (e) {
+                comment(e);
+            })
         }
     })
 })
-
 
 /* -------------------------------------------------------------------------- */
 /*      Función para llamar a la información de cada producto y mostrarla     */
@@ -200,9 +206,7 @@ function showProductComments() {
         </li>`
     }
     document.getElementById("comments").innerHTML = `<h4 style="margin-top: 40px">Comentarios</h4>
-    <ul class="list-group">` + htmlContentToAppend + `</ul>`
-
-    rating();
+    <ul class="list-group" id="preLoadedComments">` + htmlContentToAppend + `</ul>`
 }
 
 
@@ -241,4 +245,91 @@ function showRelatedProducts() {
 function relatedRedirect(id) {
     localStorage.setItem("product-info", id);
     window.location = "product-info.html";
+}
+
+/* Función para agregar más comentarios a un producto */
+function comment(e) {
+    e.preventDefault();
+    let comment = document.getElementById("commentContent");
+    let score = document.getElementById("commentScore");
+    let commentError = document.getElementById("commentError");
+    let scoreError = document.getElementById("scoreError");
+    let commentInput = document.getElementById("commentInput");
+    let scoreInput = document.getElementById("scoreInput");
+
+    function addError(form, text) { form.classList.add('formError'); text.classList.add('textError-active') };
+    function removeError(form, text) { form.classList.remove('formError'); text.classList.remove('textError-active') };
+
+    let loginflag = true;
+
+    if (comment.value == "") {
+        loginflag = false;
+        addError(commentInput, commentError);
+    } else {
+        removeError(commentInput, commentError);
+    }
+
+    if (score.value == "") {
+        loginflag = false;
+        addError(scoreInput, scoreError);
+    } else {
+        removeError(scoreInput, scoreError);
+    }
+
+    if (loginflag) {
+        let today = new Date();
+        let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        let hour = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        let commentDate = date + ' ' + hour;
+
+        if (!localStorage.getItem("Comments")) {
+            let myComments = {
+                user: localStorage.getItem("User"),
+                comment: []
+            };
+            myComments.comment[0] = {
+                product: currentProductArray.id,
+                score: score.value,
+                description: comment.value,
+                user: localStorage.getItem("User"),
+                dateTime: commentDate
+            };
+            localStorage.setItem("Comments", JSON.stringify(myComments));
+            location.reload();
+        } else {
+            let myComments = JSON.parse(localStorage.getItem("Comments"));
+            myComments.comment[myComments.comment.length] = {
+                product: currentProductArray.id,
+                score: score.value,
+                description: comment.value,
+                user: localStorage.getItem("User"),
+                dateTime: commentDate
+            }
+            localStorage.setItem("Comments", JSON.stringify(myComments));
+            location.reload();
+        }
+    };
+}
+
+/* Función para mostrar los comentarios que se agregaron */
+function loadNewComments() {
+    if (localStorage.getItem("Comments")) {
+        let myComments = JSON.parse(localStorage.getItem("Comments"));
+        let preLoadedComments = document.getElementById("preLoadedComments");
+        let htmlContentToAppend = "";
+        for (let i = 0; i < myComments.comment.length; i++) {
+            let comment = myComments.comment[i];
+            if (comment.product == currentProductArray.id) {
+            htmlContentToAppend = `<li class="list-group-item" id="${comment.score}">
+            <strong>${comment.user}</strong> - ${comment.dateTime} - <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span><br>
+            <small>${comment.description}</small>
+            </li>` + htmlContentToAppend
+            }
+        }
+        preLoadedComments.innerHTML = htmlContentToAppend + preLoadedComments.innerHTML;
+    }
 }

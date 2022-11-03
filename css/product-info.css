@@ -15,3 +15,20 @@
 .submitBtn:hover {
     background-color: #4b98fb;
 }
+
+.textError {
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 5px;
+    color: red;
+    display: none;
+}
+
+.textError-active {
+    display: block;
+}
+
+.formError select,
+.formError textarea {
+    border: 1.5px solid red;
+}

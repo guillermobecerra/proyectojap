@@ -52,13 +52,17 @@
       <div id="comment">
         <h4 style="margin-top: 40px">Comentar</h4>
         <form>
+          <div id="commentInput">
           <p>
             <small>Tu opinión:</small><br>
-            <textarea required style="width: 500px; height: 100px; margin-top: 5px"></textarea>
+            <textarea id="commentContent" required class="w-50" style="height: 100px; margin-top: 5px"></textarea>
+            <span class="textError fw-bold" id="commentError">El campo con tu opinión no puede estar vacío.</span>
           </p>
+        </div>
+        <div id="scoreInput">
           <p>
             <small>Tu puntuación:</small><br>
-            <select id="score" required style="width: 120px; height: 30px; padding-left: 5px; margin-top: 5px">
+            <select id="commentScore" required style="width: 120px; height: 30px; padding-left: 5px; margin-top: 5px">
               <option value=""></option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -66,8 +70,10 @@
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
+            <span class="textError fw-bold" id="scoreError">El campo con tu puntuación no puede estar vacío.</span>
           </p>
-          <input type="submit" value="Enviar" class="submitBtn">
+        </div>
+          <input type="submit" value="Enviar" class="submitBtn" id="commentSubmit">
         </form>
       </div>
       <div id="relatedProducts">
