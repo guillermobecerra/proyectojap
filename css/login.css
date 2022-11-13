@@ -1,37 +1,4 @@
-.logo {
-    width: 30%;
-}
-
-h1 {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-label {
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-input {
-    width: 23%;
-    padding-left: 5px;
-}
-
-.textError {
-    font-size: 12px;
-    margin-bottom: 0;
-    margin-top: 5px;
-    color: red;
-    display: none;
-}
-
-.textError-active {
-    display: block;
-}
-
 button {
-    margin-top: 30px;
     background-color: #1a73e8;
     border: 1px solid transparent;
     border-radius: 10px;
@@ -43,8 +10,4 @@ button {
 
 button:hover {
     background-color: #4b98fb;
-}
-
-.formError input {
-    border: 1.5px solid red;
 }

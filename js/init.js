@@ -59,5 +59,5 @@ array_of_li[3].innerHTML = `
 `
 
 function logout() {
-  localStorage.clear();
+  localStorage.removeItem("User");
 }

@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     })
 })
 
+
 /* -------------------------------------------------------------------------- */
 /*      Función para llamar a la información de cada producto y mostrarla     */
 /* -------------------------------------------------------------------------- */
@@ -197,7 +198,7 @@ function showProductComments() {
 
         htmlContentToAppend += `
         <li class="list-group-item" id="${comment.score}">
-        <strong>${comment.user}</strong> - ${comment.dateTime} - <span class="fa fa-star"></span>
+        <strong>${comment.user}</strong> - ${comment.dateTime} - <br class="d-md-none"><span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
@@ -229,7 +230,7 @@ function showRelatedProducts() {
     for (let i = 0; i < currentProductArray.relatedProducts.length; i++) {
         let product = currentProductArray.relatedProducts[i];
         htmlContentToAppend += `
-        <div class="card" style="width: 20%; cursor: pointer; margin: 0px 10px; padding: 5px" onclick="relatedRedirect(${product.id})">
+        <div class="card mb-md-1 mb-5 col-sm-4 col-md-5 col-lg-3" style="cursor: pointer; margin: 0px 10px; padding: 5px" onclick="relatedRedirect(${product.id})">
         <img src="${product.image}" class="card-img-top">
         <div class="card-body">
             <p class="card-text text-center">${product.name}</p>
@@ -278,7 +279,7 @@ function comment(e) {
 
     if (loginflag) {
         let today = new Date();
-        let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         let hour = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
         let commentDate = date + ' ' + hour;
 

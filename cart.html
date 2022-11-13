@@ -38,7 +38,12 @@
   </nav>
   <main>
     <div class="container">
-      <form id="buyForm" class="needs-validation" novalidate>
+      <div class="alert alert-danger text-center d-none" role="alert" id="emptyCartAlert">
+        <h4 class="alert-heading fw-bold">¡Tu carrito de compras está vacío!</h4>
+        <p>Para agregar productos a tu carrito, ve hacia la página del producto que deseas. A continuación, haz click en el botón "Comprar" que verás en la parte superior derecha de la pantalla.</p>
+        <a class="btn btn-outline-danger" href="categories.html" role="button">Ir al listado de productos</a>
+      </div>
+      <form id="buyForm" class="needs-validation d-none" novalidate>
         <div>
           <h2 class="p-4 text-center">Carrito de compras</h2>
           <h4>Artículos a comprar</h4>

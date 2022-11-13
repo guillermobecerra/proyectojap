@@ -52,10 +52,70 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container col-8">
+      <div class="d-flex">
+        <h2 class="pt-4 me-auto">Perfil</h2>
+        <img id="avatarImg" src="img/defaultAvatar.jpg" class="mt-3 img-thumbnail img-fluid float-end" alt="Avatar"
+          width="100px" height="100px"
+          style="max-width: 100px; max-height: 100px; min-width: 100px; min-height: 100px;">
       </div>
+      <hr>
+      <form id="profile-form" class="mt-2 needs-validation" novalidate>
+        <div>
+          <div class="row">
+            <div class="col-md">
+              <label for="name1" class="form-label">Primer nombre*</label>
+              <input type="text" class="form-control" id="name1" aria-describedby="name1Validation" required>
+              <div id="name1Validation" class="invalid-feedback">
+                Ingresa tu nombre.
+              </div>
+            </div>
+            <div class="mt-4 mt-md-0 col-md">
+              <label for="name2" class="form-label">Segundo nombre</label>
+              <input type="text" class="form-control" id="name2">
+            </div>
+          </div>
+          <div class="row mt-4 mt-md-4">
+            <div class="col-md">
+              <label for="lastname1" class="form-label">Primer apellido*</label>
+              <input type="text" class="form-control" id="lastname1" aria-describedby="lastname1Validation" required>
+              <div id="lastname1Validation" class="invalid-feedback">
+                Ingresa tu apellido.
+              </div>
+            </div>
+            <div class="mt-4 mt-md-0 col-md">
+              <label for="lastname2" class="form-label">Segundo apellido</label>
+              <input type="text" class="form-control" id="lastname2">
+            </div>
+          </div>
+          <div class="row mt-4 mt-md-4">
+            <div class="col-md">
+              <label for="email" class="form-label">E-mail*</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailValidation" required>
+              <div id="emailValidation" class="invalid-feedback">
+                Ingresa tu e-mail.
+              </div>
+            </div>
+            <div class="mt-4 mt-md-0 col-md">
+              <label for="avatar" class="form-label">Imagen de perfil</label>
+              <input type="file" class="form-control" id="avatar" onchange="uploadAvatar()">
+            </div>
+          </div>
+          <div class="row mt-4 mt-md-4">
+            <div class="col-md">
+              <label for="phone" class="form-label">Teléfono de contacto</label>
+              <input type="number" class="form-control" id="phone" aria-describedby="phoneValidation">
+              <div id="phoneValidation" class="invalid-feedback">
+                Ingresa un número de contacto.
+              </div>
+            </div>
+            <div class="col-md d-none d-md-block">
+            </div>
+          </div>
+          <hr class="mt-5">
+          <button type="submit" class="btn btn-primary mt-3" id="savebtn">Guardar cambios</button>
+        </div>
+      </form>
     </div>
   </main>
   <footer class="text-muted">

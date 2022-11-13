@@ -10,6 +10,7 @@ let wireTranser = document.getElementById("wireTransfer");
 let accNumber = document.getElementById("accNumber");
 
 document.addEventListener("DOMContentLoaded", function (e) {
+    emptyCart();
     showCart();
 
     document.getElementById("buyForm").addEventListener("submit", function (event) {
@@ -66,7 +67,7 @@ function showCart() {
                 ¡Debe ser 1 o más!
             </div></td>
             <td class="subtotals"><strong>${cart.articles[i].currency} <span id="${[i]}subTotal">${cart.articles[i].unitCost}</span></strong></td>
-            <td><button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button></td>
+            <td><button type="button" class="btn btn-outline-danger" onclick="deleteProduct(${[i]})"><i class="fas fa-trash-alt"></i></button></td>
         </tr>
         `
     }
@@ -239,4 +240,37 @@ function emptyFields() {
 function buyAlert() {
     let alert = document.getElementById("buyAlert");
     alert.classList.remove("d-none");
+}
+
+/* -------------------------------------------------------------------------- */
+/*                 FUNCIÓN PARA ELIMINAR PRODUCTOS DEL CARRITO                */
+/* -------------------------------------------------------------------------- */
+
+function deleteProduct(id) {
+    let carrito = JSON.parse(localStorage.getItem("Cart"));
+    carrito.articles.splice(id, 1);
+    localStorage.setItem("Cart", JSON.stringify(carrito));
+    emptyCart();
+    showCart();
+}
+
+/* -------------------------------------------------------------------------- */
+/*    FUNCIÓN QUE MUESTRA LA ALERTA DE CARRITO VACÍO O EL CARRITO EN SÍ       */
+/* -------------------------------------------------------------------------- */
+
+function emptyCart() {
+    let alert = document.getElementById("emptyCartAlert");
+    let content = document.getElementById("buyForm");
+    if (localStorage.getItem("Cart")) {
+        let cart = JSON.parse(localStorage.getItem("Cart"));
+        if (cart.articles.length > 0) {
+            alert.classList.replace("d-show", "d-none");
+            content.classList.replace("d-none", "d-show");
+        } else {
+            alert.classList.replace("d-none", "d-show");
+            content.classList.replace("d-show", "d-none")
+        }
+    } else {
+        alert.classList.replace("d-none", "d-show");
+    }
 }
