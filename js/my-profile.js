@@ -35,7 +35,7 @@ function importProfileData() {
             lastname2.value = users[i].data[0].lastname2;
             phone.value = users[i].data[0].phone;
             if (users[i].data[0].avatar == "") {
-                avatarImg.src = "img/defaultAvatar.jpg";
+                avatarImg.src = "img/img_perfil.png";
             } else {
                 const url = users[i].data[0].avatar;
                 const img = new Image();
